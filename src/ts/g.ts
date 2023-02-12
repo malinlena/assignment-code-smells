@@ -1,33 +1,5 @@
-/* 
-1. Denna funktion skall kontrollera att en användare är över 20 år och göra någonting.
-    Det finns dock problem med denna typ av funktion. Vad händer när kraven ändras och
-    fler och fler parametrar behöver läggas till? T.ex. avatar eller adress. Hitta en bättre
-    lösning som är hållbar och skalar bättre. 
-*/
-
-function createUser(
-  name: string,
-  birthday: Date,
-  email: string,
-  password: string
-) {
-  // Validation
-
-  let ageDiff = Date.now() - birthday.getTime();
-  let ageDate = new Date(ageDiff);
-  let userAge = Math.abs(ageDate.getUTCFullYear() - 1970);
-
-  console.log(userAge);
-
-  if (!(userAge < 20)) {
-    // Logik för att skapa en användare
-  } else {
-    return "Du är under 20 år";
-  }
-}
-
 /*
-  2. Se om du kan hitta två stycken code smells i följande funktion och rätta till dem.
+  1. Se om du kan hitta två stycken code smells i följande funktion och rätta till dem.
   Funktionen tar emot en lista med längshoppslängder och syftet med funktionen är att summera
   dessa hopplängder.
   */
@@ -43,7 +15,7 @@ function getLength(jumpings: number[]): number {
 }
 
 /*
-  3. I detta exempel har vi fokuserat på if-statements. Se om du kan göra exemplet bättre!
+  2. I detta exempel har vi fokuserat på if-statements. Se om du kan göra exemplet bättre!
   */
 
 class Student {
@@ -70,7 +42,7 @@ function getStudentStatus(student: Student): string {
 }
 
 /*
-  4. Variabelnamn är viktiga. Kika igenom följande kod och gör om och rätt.
+  3. Variabelnamn är viktiga. Kika igenom följande kod och gör om och rätt.
   Det finns flera code smells att identifiera här. Vissa är lurigare än andra.
   */
 
@@ -93,7 +65,7 @@ function averageWeeklyTemperature(heights: Temp[]) {
 }
 
 /*
-  5. Följande funktion kommer att presentera ett objekt i dom:en. 
+  4. Följande funktion kommer att presentera ett objekt i dom:en. 
   Se om du kan göra det bättre. Inte bara presentationen räknas, även strukturer.
   */
 
@@ -121,7 +93,7 @@ function showProduct(
 }
 
 /*
-  6. Följande funktion kommer presentera studenter. Men det finns ett antal saker som 
+  5. Följande funktion kommer presentera studenter. Men det finns ett antal saker som 
   går att göra betydligt bättre. Gör om så många som du kan hitta!
   */
 function presentStudents(students: Student[]) {
@@ -149,7 +121,7 @@ function presentStudents(students: Student[]) {
 }
 
 /*
-  7. Skriv en funktion som skall slå ihop följande texter på ett bra sätt:
+  6. Skriv en funktion som skall slå ihop följande texter på ett bra sätt:
   Lorem, ipsum, dolor, sit, amet
   Exemplet under löser problemet, men inte speciellt bra. Hur kan man göra istället?
   */
@@ -162,4 +134,31 @@ function concatenateStrings() {
   result += "amet";
 
   return result;
+}
+
+/* 
+7. Denna funktion skall kontrollera att en användare är över 20 år och göra någonting.
+    Det finns dock problem med denna typ av funktion. Vad händer när kraven ändras och
+    fler och fler parametrar behöver läggas till? T.ex. avatar eller adress. Hitta en bättre
+    lösning som är hållbar och skalar bättre. 
+*/
+function createUser(
+  name: string,
+  birthday: Date,
+  email: string,
+  password: string
+) {
+  // Validation
+
+  let ageDiff = Date.now() - birthday.getTime();
+  let ageDate = new Date(ageDiff);
+  let userAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+  console.log(userAge);
+
+  if (!(userAge < 20)) {
+    // Logik för att skapa en användare
+  } else {
+    return "Du är under 20 år";
+  }
 }

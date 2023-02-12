@@ -1,5 +1,5 @@
 /*
-8. 
+1. Se om du kan hitta problem med koden nedan och se om du kan göra den bättre.
 */
 export enum Sort {
   PRICE_ASCENDING = "Stigande pris",
@@ -25,7 +25,6 @@ export class Product {
 }
 
 export function sortProductsBy(sort: Sort, products: Product[]): Product[] {
-  // Copy the list sense "products" is a reference to all the products.
   let copiedList: Product[] = [];
   products.forEach((product) => copiedList.push(product));
 
@@ -66,7 +65,7 @@ function sortList(whichAttribute: string, products: Product[]): Product[] {
 }
 
 /*
-  9. Refaktorera funktionen createProductHtml :)
+  2. Refaktorera funktionen createProductHtml :)
   */
 class Cart {
   addToCart(i: number) {}
@@ -90,8 +89,6 @@ export function createProductHtml() {
     dogImgContainer.className = "dogimgcontainer";
     dogproduct.appendChild(dogImgContainer);
     let dogImg: HTMLImageElement = document.createElement("img");
-
-    // console.log(productList[i].picture);
 
     dogImg.src = productList[i].picture;
     dogImg.alt = productList[i].pictureAlt;
@@ -175,7 +172,7 @@ export function createProductHtml() {
 }
 
 /*
-  10. Refaktorera funktionen getfromstorage
+  3. Refaktorera funktionen getfromstorage
   */
 export class CartProduct {
   constructor(
