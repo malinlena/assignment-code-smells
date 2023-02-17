@@ -4,14 +4,11 @@
   dessa hopplängder.
   */
 
-function getLength(jumpings: number[]): number {
-  let totalNumber = 0;
-
-  totalNumber = jumpings.reduce(
-    (jumpDistanceSoFar, currentJump) => jumpDistanceSoFar + currentJump
+function getLength(jumps: number[]) {
+  return jumps.reduce(
+    (jumpDistanceSoFar, currentJump) => jumpDistanceSoFar + currentJump,
+    0
   );
-
-  return totalNumber;
 }
 
 /*
@@ -26,19 +23,10 @@ class Student {
   ) {}
 }
 
-function getStudentStatus(student: Student): string {
-  student.passed =
-    student.name == "Sebastian"
-      ? student.handedInOnTime
-        ? true
-        : false
-      : false;
+function getStudentStatus(student: Student) {
+  student.passed = student.name === "Sebastian" && student.handedInOnTime;
 
-  if (student.passed) {
-    return "VG";
-  } else {
-    return "IG";
-  }
+  return student.passed ? "VG" : "IG";
 }
 
 /*
@@ -47,21 +35,29 @@ function getStudentStatus(student: Student): string {
   */
 
 class Temp {
-  constructor(public q: string, public where: Date, public v: number) {}
+  constructor(
+    public city: string,
+    public day: Date,
+    public temperature: number
+  ) {}
 }
 
-function averageWeeklyTemperature(heights: Temp[]) {
-  let r = 0;
+function averageWeeklyTemperature(temperatures: Temp[]) {
+  let sum = 0;
+  const weekInMilliseconds = 7 * 24 * 60 * 60 * 1000;
 
-  for (let who = 0; who < heights.length; who++) {
-    if (heights[who].q === "Stockholm") {
-      if (heights[who].where.getTime() > Date.now() - 604800000) {
-        r += heights[who].v;
-      }
+  for (let i = 0; i < temperatures.length; i++) {
+    const { city, day, temperature } = temperatures[i];
+
+    if (
+      city === "Stockholm" &&
+      day.getTime() > Date.now() - weekInMilliseconds
+    ) {
+      sum += temperature;
     }
   }
 
-  return r / 7;
+  return sum / 7;
 }
 
 /*
@@ -77,18 +73,18 @@ function showProduct(
   image: string,
   parent: HTMLElement
 ) {
-  let container = document.createElement("div");
-  let title = document.createElement("h4");
-  let pris = document.createElement("strong");
-  let imageTag = document.createElement("img");
+  const container = document.createElement("div");
+  const title = document.createElement("h4");
+  const priceLabel = document.createElement("strong");
+  const imageTag = document.createElement("img");
 
   title.innerHTML = name;
-  pris.innerHTML = price.toString();
+  priceLabel.innerHTML = price.toString();
   imageTag.src = image;
 
   container.appendChild(title);
   container.appendChild(imageTag);
-  container.appendChild(pris);
+  container.appendChild(priceLabel);
   parent.appendChild(container);
 }
 
@@ -98,25 +94,17 @@ function showProduct(
   */
 function presentStudents(students: Student[]) {
   for (const student of students) {
-    if (student.handedInOnTime) {
-      let container = document.createElement("div");
-      let checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.checked = true;
+    const container = document.createElement("div");
+    const checkbox = document.createElement("input");
 
-      container.appendChild(checkbox);
-      let listOfStudents = document.querySelector("ul#passedstudents");
-      listOfStudents?.appendChild(container);
-    } else {
-      let container = document.createElement("div");
-      let checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.checked = false;
+    checkbox.type = "checkbox";
+    checkbox.checked = student.handedInOnTime;
+    container.appendChild(checkbox);
 
-      container.appendChild(checkbox);
-      let listOfStudents = document.querySelector("ul#failedstudents");
-      listOfStudents?.appendChild(container);
-    }
+    const listOfStudents = document.querySelector(
+      `ul#${student.handedInOnTime ? "passed" : "failed"}students`
+    );
+    listOfStudents?.appendChild(container);
   }
 }
 
@@ -126,14 +114,7 @@ function presentStudents(students: Student[]) {
   Exemplet under löser problemet, men inte speciellt bra. Hur kan man göra istället?
   */
 function concatenateStrings() {
-  let result = "";
-  result += "Lorem";
-  result += "ipsum";
-  result += "dolor";
-  result += "sit";
-  result += "amet";
-
-  return result;
+  return ["Lorem", "ipsum", "dolor", "sit", "amet"].join("");
 }
 
 /* 
@@ -142,21 +123,24 @@ function concatenateStrings() {
     fler och fler parametrar behöver läggas till? T.ex. avatar eller adress. Hitta en bättre
     lösning som är hållbar och skalar bättre. 
 */
-function createUser(
-  name: string,
-  birthday: Date,
-  email: string,
-  password: string
-) {
+
+interface User {
+  name: string;
+  birthday: Date;
+  email: string;
+  password: string;
+}
+
+function createUser({ name, birthday, email, password }: User) {
   // Validation
 
-  let ageDiff = Date.now() - birthday.getTime();
-  let ageDate = new Date(ageDiff);
-  let userAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+  const ageDiff = Date.now() - birthday.getTime();
+  const ageDate = new Date(ageDiff);
+  const userAge = Math.abs(ageDate.getUTCFullYear() - 1970);
 
   console.log(userAge);
 
-  if (!(userAge < 20)) {
+  if (userAge >= 20) {
     // Logik för att skapa en användare
   } else {
     return "Du är under 20 år";
